@@ -1,5 +1,6 @@
 package com.example.user_management.controller;
 
+import com.example.user_management.dto.JwtAuthResponse;
 import com.example.user_management.dto.LoginDto;
 import com.example.user_management.dto.RegisterDto;
 import com.example.user_management.service.AuthService;
@@ -24,9 +25,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
-        String response = authService.Login(loginDto);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto) {
+        String token = authService.Login(loginDto);
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
 }
 

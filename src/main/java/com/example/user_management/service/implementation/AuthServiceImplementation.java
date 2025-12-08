@@ -7,6 +7,7 @@ import com.example.user_management.entity.User;
 import com.example.user_management.exception.UserException;
 import com.example.user_management.repository.RoleRepository;
 import com.example.user_management.repository.UserRepository;
+import com.example.user_management.security.JwtTokenProvider;
 import com.example.user_management.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class AuthServiceImplementation implements AuthService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public String Register(RegisterDto registerDto) {
@@ -66,7 +68,8 @@ public class AuthServiceImplementation implements AuthService {
         ));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
 
-        return "login Successful!";
+        return token;
     }
 }
