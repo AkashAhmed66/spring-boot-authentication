@@ -47,9 +47,9 @@ public class UserService implements UserServiceInterface {
     public UserDto updateUser(Long id, UserDto userDto) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFounException("user not found"));
 
-        user.setEmail(userDto.email());
-        user.setFirstName(userDto.firstName());
-        user.setLastName(userDto.lastName());
+        user.setEmail(userDto.getEmail());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
 
         User updatedUser = userRepository.save(user);
 
