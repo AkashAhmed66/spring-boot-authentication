@@ -4,6 +4,7 @@ import com.example.user_management.dto.JwtAuthResponse;
 import com.example.user_management.dto.LoginDto;
 import com.example.user_management.dto.RegisterDto;
 import com.example.user_management.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,13 +20,13 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterDto registerDto) {
         String response = authService.Register(registerDto);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginDto loginDto) {
         String token = authService.Login(loginDto);
 
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();

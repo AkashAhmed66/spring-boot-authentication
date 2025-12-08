@@ -3,6 +3,7 @@ package com.example.user_management.controller;
 import com.example.user_management.dto.UserDto;
 import com.example.user_management.entity.User;
 import com.example.user_management.service.implementation.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDto savedUserDto = userService.createUser(userDto);
         return ResponseEntity.ok(savedUserDto);
     }
@@ -37,7 +38,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUserById(
             @PathVariable Long id,
-            @RequestBody UserDto userDto
+            @Valid @RequestBody UserDto userDto
             ) {
         UserDto responesUserDto = userService.updateUser(id, userDto);
         return ResponseEntity.ok(responesUserDto);
