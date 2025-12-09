@@ -6,19 +6,19 @@ import com.example.user_management.exception.ResourceNotFounException;
 import com.example.user_management.mapper.UserMapper;
 import com.example.user_management.repository.UserRepository;
 import com.example.user_management.service.UserServiceInterface;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserService implements UserServiceInterface {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private UserRepository userRepository;
+    private UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
 
     @Override
     public UserDto createUser(UserDto userDto) {

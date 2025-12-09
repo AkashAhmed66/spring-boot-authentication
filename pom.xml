@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>user-management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 	<name>user-management</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -99,6 +100,11 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.5.5.Final</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
     </dependencies>
