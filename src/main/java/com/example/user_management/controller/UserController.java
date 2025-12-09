@@ -1,7 +1,6 @@
 package com.example.user_management.controller;
 
 import com.example.user_management.dto.UserDto;
-import com.example.user_management.entity.User;
 import com.example.user_management.service.implementation.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
