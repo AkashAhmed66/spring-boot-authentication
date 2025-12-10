@@ -8,10 +8,8 @@ import com.example.user_management.mapper.TableResponseMapper;
 import com.example.user_management.mapper.UserMapper;
 import com.example.user_management.repository.UserRepository;
 import com.example.user_management.service.UserServiceInterface;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
