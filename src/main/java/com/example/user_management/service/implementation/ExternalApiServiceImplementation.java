@@ -1,13 +1,13 @@
 package com.example.user_management.service.implementation;
 
 import com.example.user_management.service.ExternalApiService;
+import com.example.user_management.utils.AsyncService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public class ExternalApiServiceImplementation implements ExternalApiService {
 
     private WebClient webClient;
+    private AsyncService asyncService;
 
     public CompletableFuture<Map<String, Object>> callApi1() {
         return webClient.get()
@@ -46,4 +47,33 @@ public class ExternalApiServiceImplementation implements ExternalApiService {
             return finalValue;
         });
     }
+
+    @Override
+    public CompletableFuture<List<Map<String, Object>>> TwoAsyncServiceMergeelApiCalls() {
+
+        CompletableFuture<Map<String, Object>> m1 = asyncService.asyncMethodOne();
+        CompletableFuture<Map<String, Object>> m2 = asyncService.asyncMethodTwo();
+
+        List<Map<String, Object>> resultList = Collections.synchronizedList(new ArrayList<>());
+
+        // Add each result in completion order
+        m1.thenAccept(resultList::add);
+        m2.thenAccept(resultList::add);
+
+        return CompletableFuture.allOf(m1, m2)
+                .thenApply(voidResult -> {
+
+                    // Add final summary object
+                    Map<String, Object> finalObj = Map.of(
+                            "status", "both completed",
+                            "time", asyncService.getCurrentTime()
+                    );
+
+                    resultList.add(finalObj);
+
+                    return resultList;
+                });
+    }
+
+
 }

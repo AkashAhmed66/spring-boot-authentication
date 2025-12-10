@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,6 +29,18 @@ public class AsyncApiCall {
         }
         catch (Exception e) {
             return new ResponseEntity<>("Exception occurred while calling api: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-async-data")
+    public ResponseEntity<?> getAsyncData() {
+        try {
+            CompletableFuture<List<Map<String, Object>>> futureResponse = externalApiService.TwoAsyncServiceMergeelApiCalls();
+            List<Map<String, Object>> response = futureResponse.get(); // Wait for the result
+            return ResponseEntity.ok(response);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("Exception occurred while calling async: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
