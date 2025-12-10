@@ -1,23 +1,25 @@
 package com.example.user_management.service.implementation;
 
 import com.example.user_management.dto.UserDto;
+import com.example.user_management.dto.UserResponseDto;
 import com.example.user_management.entity.User;
 import com.example.user_management.exception.ResourceNotFounException;
 import com.example.user_management.mapper.UserMapper;
+import com.example.user_management.mapper.UserResponseMapper;
 import com.example.user_management.repository.UserRepository;
 import com.example.user_management.service.UserServiceInterface;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@NoArgsConstructor
 @AllArgsConstructor
 public class UserService implements UserServiceInterface {
     private UserRepository userRepository;
     private UserMapper userMapper;
+    private UserResponseMapper userResponseMapper;
 
 
     @Override
@@ -34,13 +36,11 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
-        List<User> users = userRepository.findAll();
+    public UserResponseDto getAllUsers() {
+        Pageable pageDetails = PageRequest.of(0, 10);
+        Page<User> pagedUsers = userRepository.findAll(pageDetails);
 
-        return users
-                .stream()
-                .map(userMapper::toDto)
-                .toList();
+        return userResponseMapper.toDto(pagedUsers);
     }
 
     @Override

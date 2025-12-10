@@ -1,6 +1,7 @@
 package com.example.user_management.controller;
 
 import com.example.user_management.dto.UserDto;
+import com.example.user_management.dto.UserResponseDto;
 import com.example.user_management.service.implementation.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<UserResponseDto> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
