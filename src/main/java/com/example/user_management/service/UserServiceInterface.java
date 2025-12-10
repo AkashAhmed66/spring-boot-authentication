@@ -1,14 +1,13 @@
 package com.example.user_management.service;
 
+import com.example.user_management.dto.TableResponseDto;
 import com.example.user_management.dto.UserDto;
-import com.example.user_management.dto.UserResponseDto;
-
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface UserServiceInterface {
     public UserDto createUser (UserDto userDto);
     public UserDto getUserById (Long id);
-    public UserResponseDto getAllUsers();
+    public TableResponseDto getAllUsers(Pageable pageable);
     public UserDto updateUser(Long id, UserDto userDto);
     public void deleteUser(Long id);
 }

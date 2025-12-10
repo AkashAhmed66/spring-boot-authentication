@@ -1,13 +1,12 @@
 package com.example.user_management.controller;
 
 import com.example.user_management.dto.UserDto;
-import com.example.user_management.dto.UserResponseDto;
+import com.example.user_management.dto.TableResponseDto;
 import com.example.user_management.service.implementation.UserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,8 +24,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<UserResponseDto> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<TableResponseDto> getAllUsers(Pageable pageable) {
+        return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
     @GetMapping("/{id}")

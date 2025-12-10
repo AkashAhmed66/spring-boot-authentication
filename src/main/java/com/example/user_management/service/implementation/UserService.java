@@ -1,13 +1,14 @@
 package com.example.user_management.service.implementation;
 
+import com.example.user_management.dto.TableResponseDto;
 import com.example.user_management.dto.UserDto;
-import com.example.user_management.dto.UserResponseDto;
 import com.example.user_management.entity.User;
 import com.example.user_management.exception.ResourceNotFounException;
+import com.example.user_management.mapper.TableResponseMapper;
 import com.example.user_management.mapper.UserMapper;
-import com.example.user_management.mapper.UserResponseMapper;
 import com.example.user_management.repository.UserRepository;
 import com.example.user_management.service.UserServiceInterface;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserServiceInterface {
     private UserRepository userRepository;
     private UserMapper userMapper;
-    private UserResponseMapper userResponseMapper;
+    private TableResponseMapper tableResponseMapper;
 
 
     @Override
@@ -36,11 +37,10 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public UserResponseDto getAllUsers() {
-        Pageable pageDetails = PageRequest.of(0, 10);
-        Page<User> pagedUsers = userRepository.findAll(pageDetails);
+    public TableResponseDto getAllUsers(Pageable pageable) {
+        Page<User> pagedUsers = userRepository.findAll(pageable);
 
-        return userResponseMapper.toDto(pagedUsers);
+        return tableResponseMapper.toDto(pagedUsers);
     }
 
     @Override
